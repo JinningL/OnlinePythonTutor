@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Python Tutor Trace Viewer</title>
+  <script src="build/visualize.bundle.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+    #vcontainer {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎥 Trace Viewer</h2>
+  <div id="vcontainer">Loading trace...</div>
+
+  <script>
+    // 
+    fetch("trace.json")
+      .then(res => res.json())
+      .then(traceData => {
+        new ExecutionVisualizer('vcontainer', traceData, {
+          startingInstruction: 0,
+          embeddedMode: true,
+          heightChangeCallback: () => {}
+        });
+      })
+      .catch(err => {
+        document.getElementById('vcontainer').innerText = "❌ Failed to load trace.json";
+        console.error("加载 trace.json 失败：", err);
+      });
+  </script>
+</body>
+</html>
