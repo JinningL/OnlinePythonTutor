@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Offline Python Tutor Viewer</title>
+  <script src="build/render-trace.bundle.js"></script>
+</head>
+<body>
+  <div id="visualization"></div>
+
+  <script>
+    fetch('trace.json')
+      .then(response => response.json())
+      .then(traceData => {
+        // ✅ 推荐用 window. 前缀防止找不到变量
+        new window.ExecutionVisualizer('visualization', traceData, {
+          heightChangeCallback: () => {}
+        });
+      });
+  </script>
+</body>
+</html>
