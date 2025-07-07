@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Online C Compiler, Visual Debugger, and AI Tutor - Learn C programming by
+      visualizing code
+    </title>
+
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+
+    <!-- Load Prism.js default stylesheet (for code highlighting appearance) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css"
+      rel="stylesheet"
+    />
+    <!-- Load Prism.js core script (provides syntax highlighting functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <!-- Load C language syntax definition (enables C code highlighting) -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-c.js"></script>
+
+    <script type="text/javascript">
+      window.optOverride = {};
+      window.optOverride.frontendLang = "c";
+      fetch("trace.json")
+        .then((res) => res.json())
+        .then((traceData) => {
+          window.optOverride.demoDat = traceData;
+        });
+    </script>
+
+    <script
+      type="text/javascript"
+      src="build/improved-visualize.js"
+      charset="utf-8"
+    ></script>
+
+    <style>
+      td.cod {
+        font-family: Menlo;
+        font-size: 11pt;
+        background-color: #ffffff;
+        padding: 5px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="demoVis"></div>
+
+    <script>
+      // 等待 DOM 和 visualize 渲染完毕后执行
+      function highlightCode() {
+        const interval = setInterval(() => {
+          const codeCells = document.querySelectorAll("td.cod");
+          if (codeCells.length > 0) {
+            codeCells.forEach((cell) => {
+              const raw = cell.textContent;
+              const highlighted = Prism.highlight(raw, Prism.languages.c, "c");
+              cell.innerHTML = highlighted;
+            });
+            clearInterval(interval);
+          }
+        }, 500);
+      }
+
+      window.addEventListener("load", highlightCode);
+    </script>
+  </body>
+</html>
